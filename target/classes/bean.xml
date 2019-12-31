@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+     
+   <context:component-scan base-package="com.spring"></context:component-scan>
+   <context:property-placeholder location="classpath:dbInfo.properties"/>
+    
+    <bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    	<property name="driverClassName" value="${driverClassName}"/>
+    	<property name="url" value="${url}"/>
+    	<property name="username" value="${dbusername}"/>
+    	<property name="password" value="${password}"/>
+    </bean>
+    <!-- <bean id="employee" class="com.spring.bean.Employee">
+    	<property name="empId" value="2345441"/>
+    	<property name="empName" value="Devendra"/>
+    </bean> -->
+    
+    <!-- <bean id = "empDao" 
+      class = "com.spring.dao.EmployeeDAO">
+      <property name ="dataSource" ref = "myDataSource" />    
+   </bean> -->
+   <bean id="myTransactionalManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   	<property name="dataSource" ref="myDataSource"></property>
+   </bean>
+   <tx:annotation-driven/>
+</beans> 
